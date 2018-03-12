@@ -115,7 +115,7 @@ namespace TDD.Tests
 
                 if (!isUserExist)
                 {
-                    return null;
+                    return "Hasło lub Użytkownik są błędne";
                 }
 
                 var user = _userRepository.GetBy(x => x.Username == loginModel.Username);
