@@ -110,7 +110,7 @@ namespace TDD.Tests
             {
                 _userRepository = userRepository;
             }
-            public ResultDto<T> Login(LoginModel loginModel)
+            public ResultDto<LoginResultDto> Login(LoginModel loginModel)
             {
                 var isUserExist = _userRepository.Exist(x => x.Username == loginModel.Username);
 
@@ -139,6 +139,11 @@ namespace TDD.Tests
                     return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
                 }
             }
+        }
+
+        public class LoginResultDto : BaseDto
+        {
+            public string Email { get; set; }
         }
 
         public class Result<T> where T : BaseDto
