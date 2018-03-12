@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
@@ -50,6 +50,33 @@ namespace TDD.Tests
                 return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             }
         }
+
+        [Fact]
+        public void ShouldReturnErrorOnInvalidUser()
+        {
+            var error = "Hasło luub Użytkownik błędne";
+            //user w bazie
+            var user = new User { Username = "login", Email = "mail@mail.com", Password = GetHash("asd") };
+
+            var loginModel = new LoginModel
+            {
+                Username = "login",
+                Password = "asd"
+            };
+            var userRepository = new Mock<IRepository<User>>();
+
+            var userService = new UserService(userRepository.Object);
+
+            var accountController = new AccountController(userService);
+
+
+            var result = accountController.Login(loginModel);
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            var errorResult = Assert.IsAssignableFrom<string>(badRequest.Value);
+
+            Assert.Equal(error, errorResult);
+        }
+       
 
         public class User : Entity
         {
