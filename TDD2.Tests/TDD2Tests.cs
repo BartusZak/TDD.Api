@@ -32,7 +32,7 @@ namespace TDD.Tests
 
 
             var result = accountController.Login(loginModel);
-            var okResult = (System.Web.Http.Results.OkNegotiatedContentResult<string>)result;
+            var okResult = Assert.IsType<OkObjectResult>(result);
             var email = okResult.Content;
 
             Assert.Equal(user.Email, email);
@@ -102,7 +102,7 @@ namespace TDD.Tests
                 _userService = userService;
             }
 
-            public IHttpActionResult Login(LoginModel loginModel)
+            public IActionResult Login(LoginModel loginModel)
             {
                 var userData = _userService.Login(loginModel);
 
