@@ -112,21 +112,31 @@ namespace TDD.Tests
             }
             public ResultDto<LoginResultDto> Login(LoginModel loginModel)
             {
+                var result = new ResultDto<LoginResultDto>
+                {
+                    Errors = new List<string>()
+                };
+
                 var isUserExist = _userRepository.Exist(x => x.Username == loginModel.Username);
 
                 if (!isUserExist)
                 {
-                    return "Hasło lub Użytkownik są błędne";
+                    result.Errors.Add("Hasło lub Użytkownik są błędne");
+                    return result;
                 }
 
                 var user = _userRepository.GetBy(x => x.Username == loginModel.Username);
 
                 if (user.Password == GetHash(loginModel.Password))
                 {
-                    return user.Email;
+                    result.SuccesResult = new LoginResultDto
+                    {
+                        Email = user.Email
+                    };
+                    return result;
                 }
 
-                return null;
+                return result;
             }
             private string GetHash(string text)
             {
