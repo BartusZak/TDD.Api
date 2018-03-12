@@ -17,7 +17,7 @@ namespace TDD.Tests
         [Fact]
         public void ShouldLoginWithSuccess()
         {
-            var user = new User { Username = "login", Email = "mail@mail.com", Password = "asd" };
+            var user = new User { Username = "login", Email = "mail@mail.com", Password = GetHash("asd") };
 
             var loginModel = new LoginModel
             {
