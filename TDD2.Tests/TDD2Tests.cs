@@ -188,7 +188,7 @@ namespace TDD.Tests
 
                 if(result.IsError)
                 {
-                    BadRequest(result);
+                    return BadRequest(result);
                 }
 
                 return Ok(result);
