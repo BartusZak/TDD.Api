@@ -100,7 +100,7 @@ namespace TDD.Tests
 
         public interface IUserService
         {
-            string Login(LoginModel loginModel);
+            ResultDto<LoginResultDto> Login(LoginModel loginModel);
         }
 
         public class UserService : IUserService
@@ -146,11 +146,11 @@ namespace TDD.Tests
             public string Email { get; set; }
         }
 
-        public class Result<T> where T : BaseDto
+        public class ResultDto<T> where T : BaseDto
         {
             public T SuccesResult { get; set; }
             public List<string> Errors { get; set; }
-            public bool isError { get { return Errors?.Count > 0; } }
+            public bool IsError { get { return Errors?.Count > 0; } }
         }
 
         public class BaseDto
