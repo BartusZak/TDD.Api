@@ -94,7 +94,7 @@ namespace TDD.Tests
 
                 var user = _userRepository.GetBy(x => x.Username == loginModel.Username);
 
-                if (user.Password == loginModel.Password)
+                if (user.Password == GetHash(loginModel.Password))
                 {
                     return user.Email;
                 }
