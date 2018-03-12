@@ -10,10 +10,6 @@ namespace TDD.Tests
 {
     public class UnitTest1
     {
-        [Fact]
-        public void TestMethod1()
-        {
-        }
 
         [Fact]
         public void ShouldLoginWithSuccess()
@@ -73,9 +69,9 @@ namespace TDD.Tests
 
             var result = accountController.Login(loginModel);
             var badRequest = Assert.IsType<BadRequestObjectResult>(result);
-            var errorResult = Assert.IsAssignableFrom<string>(badRequest.Value);
+            var errorResult = Assert.IsAssignableFrom<ResultDto<LoginResultDto>>(badRequest.Value);
 
-            Assert.Equal(error, errorResult);
+            Assert.Contains(error, errorResult.Errors);
         }
        
 
@@ -121,7 +117,7 @@ namespace TDD.Tests
 
                 if (!isUserExist)
                 {
-                    result.Errors.Add("Hasło lub Użytkownik są błędne");
+                    result.Errors.Add("Hasło luub Użytkownik błędne");
                     return result;
                 }
 
