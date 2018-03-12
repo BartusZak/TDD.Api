@@ -33,7 +33,7 @@ namespace TDD.Tests
 
             var result = accountController.Login(loginModel);
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var email = okResult.Content;
+            var email = Assert.IsAssignableFrom<string>(okResult.Value);
 
             Assert.Equal(user.Email, email);
         }
