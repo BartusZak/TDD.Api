@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
@@ -109,7 +110,7 @@ namespace TDD.Tests
             {
                 _userRepository = userRepository;
             }
-            public string Login(LoginModel loginModel)
+            public ResultDto<T> Login(LoginModel loginModel)
             {
                 var isUserExist = _userRepository.Exist(x => x.Username == loginModel.Username);
 
@@ -139,6 +140,19 @@ namespace TDD.Tests
                 }
             }
         }
+
+        public class Result<T> where T : BaseDto
+        {
+            public T SuccesResult { get; set; }
+            public List<string> Errors { get; set; }
+            public bool isError { get { return Errors?.Count > 0; } }
+        }
+
+        public class BaseDto
+        {
+
+        }
+
         public class Entity
         {
             public long Id { get; set; }
