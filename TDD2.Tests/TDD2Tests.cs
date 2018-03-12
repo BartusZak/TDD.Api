@@ -184,9 +184,14 @@ namespace TDD.Tests
 
             public IActionResult Login(LoginModel loginModel)
             {
-                var userData = _userService.Login(loginModel);
+                var result = _userService.Login(loginModel);
 
-                return Ok(userData);
+                if(result.IsError)
+                {
+                    BadRequest(result);
+                }
+
+                return Ok(result);
             }
         }
 
