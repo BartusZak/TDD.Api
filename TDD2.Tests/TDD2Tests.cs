@@ -10,6 +10,31 @@ namespace TDD.Tests
 {
     public class UnitTest1
     {
+        [Fact]
+        public void ShouldReturnOnInvalidPassword()
+        {
+            var error = "Haslo lub uzytkownik jest bledne ";
+            //user w bazie
+            var user = new User { Username = "login", Email = "mail@mail.com", Password = GetHash("asdsdasd") };
+            var loginModel = new LoginModel
+            {
+                Username = "login",
+                Password = "asd"
+            };
+            var userRepository = new Mock<IRepository<User>>();
+
+            var userService = new UserService(userRepository.Object);
+
+            var accountController = new AccountController(userService);
+
+
+            var result = accountController.Login(loginModel);
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            var errorResult = Assert.IsAssignableFrom<ResultDto<LoginResultDto>>(badRequest.Value);
+
+            Assert.Contains(error, errorResult.Errors);
+        }
+
 
         [Fact]
         public void ShouldLoginWithSuccess()
@@ -51,7 +76,7 @@ namespace TDD.Tests
         [Fact]
         public void ShouldReturnErrorOnInvalidUser()
         {
-            var error = "Hasło luub Użytkownik błędne";
+            var error = "Haslo lub uzytkownik jest bledne ";
             //user w bazie
             var user = new User { Username = "login", Email = "mail@mail.com", Password = GetHash("asd") };
 
@@ -73,7 +98,7 @@ namespace TDD.Tests
 
             Assert.Contains(error, errorResult.Errors);
         }
-       
+
 
         public class User : Entity
         {
@@ -115,22 +140,25 @@ namespace TDD.Tests
 
                 var isUserExist = _userRepository.Exist(x => x.Username == loginModel.Username);
 
-                if (!isUserExist)
-                {
-                    result.Errors.Add("Hasło luub Użytkownik błędne");
-                    return result;
-                }
+
+
 
                 var user = _userRepository.GetBy(x => x.Username == loginModel.Username);
-
-                if (user.Password == GetHash(loginModel.Password))
+                if (user?.Password != GetHash(loginModel.Password))
                 {
-                    result.SuccessResult = new LoginResultDto
-                    {
-                        Email = user.Email
-                    };
+                    result.Errors.Add("Haslo lub uzytkownik jest bledne ");
                     return result;
                 }
+
+
+
+
+                result.SuccessResult = new LoginResultDto
+                {
+                    Email = user.Email
+                };
+
+
 
                 return result;
             }
@@ -182,10 +210,11 @@ namespace TDD.Tests
             {
                 var result = _userService.Login(loginModel);
 
-                if(result.IsError)
+                if (result.IsError)
                 {
                     return BadRequest(result);
                 }
+
 
                 return Ok(result);
             }
