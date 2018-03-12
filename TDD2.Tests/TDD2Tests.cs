@@ -32,9 +32,9 @@ namespace TDD.Tests
 
             var result = accountController.Login(loginModel);
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var email = Assert.IsAssignableFrom<string>(okResult.Value);
+            var okResultValue = Assert.IsAssignableFrom<ResultDto<LoginResultDto>>(okResult.Value);
 
-            Assert.Equal(user.Email, email);
+            Assert.Equal(user.Email, okResultValue.SuccessResult.Email);
         }
         private string GetHash(string text)
         {
@@ -125,7 +125,7 @@ namespace TDD.Tests
 
                 if (user.Password == GetHash(loginModel.Password))
                 {
-                    result.SuccesResult = new LoginResultDto
+                    result.SuccessResult = new LoginResultDto
                     {
                         Email = user.Email
                     };
@@ -154,7 +154,7 @@ namespace TDD.Tests
 
         public class ResultDto<T> where T : BaseDto
         {
-            public T SuccesResult { get; set; }
+            public T SuccessResult { get; set; }
             public List<string> Errors { get; set; }
             public bool IsError { get { return Errors?.Count > 0; } }
         }
