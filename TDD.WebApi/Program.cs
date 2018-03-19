@@ -6,7 +6,14 @@ namespace TDD.WebApi
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BuildWebHost(args);
+        }
+
+        public static IWebHost BuildWebHost (string[] args)
+        {
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
         }
     }
 }
