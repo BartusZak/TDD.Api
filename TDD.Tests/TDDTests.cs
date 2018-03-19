@@ -63,7 +63,8 @@ namespace TDD.Tests
             var okResult = Assert.IsType<OkObjectResult>(result);
             var okResultValue = Assert.IsAssignableFrom<ResultDto<LoginResultDto>>(okResult.Value);
 
-            Assert.Equal(user.Email, okResultValue.SuccessResult.Email);
+            //Assert.Equal(user.Email, okResultValue.SuccessResult.Email);
+            Assert.NotNull(okResultValue.SuccessResult?.Token);
         }
         private string GetHash(string text)
         {
