@@ -29,8 +29,9 @@ namespace TDD.Tests
                 Password = "asd"
             };
             var userRepository = new Mock<IRepository<User>>();
+            var configurationManager = new Mock<IConfigurationManager>();
 
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(userRepository.Object, configurationManager.Object);
 
             var accountController = new AccountController(userService);
 
@@ -54,10 +55,14 @@ namespace TDD.Tests
                 Password = "asd"
             };
             var userRepository = new Mock<IRepository<User>>();
+            var configurationManager = new Mock<IConfigurationManager>();
+
             userRepository.Setup(x => x.Exist(It.IsAny<Func<User, bool>>())).Returns(true);
             userRepository.Setup(x => x.GetBy(It.IsAny<Func<User, bool>>())).Returns(user);
+            configurationManager.Setup(x => x.GetValue(It.IsAny<string>()))
+                .Returns("asdasdasdasdasdasdasdasdasdasdasdasdasdaasdasd");
 
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(userRepository.Object, configurationManager.Object);
 
             var accountController = new AccountController(userService);
 
@@ -94,8 +99,9 @@ namespace TDD.Tests
                 Password = "asd"
             };
             var userRepository = new Mock<IRepository<User>>();
+            var configurationManager = new Mock<IConfigurationManager>();
 
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(userRepository.Object, configurationManager.Object);
 
             var accountController = new AccountController(userService);
 

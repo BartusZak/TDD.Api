@@ -21,6 +21,7 @@ namespace TDD.Service
             _userRepository = userRepository;
             _configuration = configuration;
         }
+
         public ResultDto<LoginResultDto> Login(LoginModel loginModel)
         {
             var result = new ResultDto<LoginResultDto>
@@ -48,7 +49,8 @@ namespace TDD.Service
 
             result.SuccessResult = new LoginResultDto
             {
-                Email = user.Email
+                Email = user.Email,
+                Token = token
             };
 
 
