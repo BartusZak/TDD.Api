@@ -28,13 +28,14 @@ namespace TDD.Service
 
 
             var user = _userRepository.GetBy(x => x.Username == loginModel.Username);
+
             if (user?.Password != GetHash(loginModel.Password))
             {
                 result.Errors.Add("Haslo lub uzytkownik jest bledne ");
                 return result;
             }
 
-
+            var token = GetToken(user, SecretKey???, issuer???, DateTime.Now);
 
 
             result.SuccessResult = new LoginResultDto
@@ -46,6 +47,12 @@ namespace TDD.Service
 
             return result;
         }
+
+        private object GetToken(User user, object p1, object p2, DateTime now)
+        {
+            throw new NotImplementedException();
+        }
+
         private string GetHash(string text)
         {
             // SHA512 is disposable by inheritance.  
