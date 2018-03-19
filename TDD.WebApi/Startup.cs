@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TDD.WebApi
@@ -18,9 +19,10 @@ namespace TDD.WebApi
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection service)
+        public void ConfigureServices(IServiceCollection services)
         {
-            service.AddMvc();
+            services.AddAuthentication(options => { options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme });
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
