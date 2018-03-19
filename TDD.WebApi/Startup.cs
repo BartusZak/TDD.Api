@@ -35,7 +35,8 @@ namespace TDD.WebApi
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = Configuration["Jwt:Issuer"],
-                        //
+                        //odnosimy sie do tablicy (ConfiguratioN) podajemy pierwsze zaniezdzenie - 
+                        //znajdzie jwt po : znajdzie kolejne zagniezdzenie - Issuer
                         ValidAudience = Configuration["Jwt:Issuer"],
                         IssuerSigningKey =
                             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
