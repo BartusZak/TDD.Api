@@ -17,6 +17,7 @@ namespace TDD
 
         public string GetValue(string key)
         {
+            //to jest to samo co w startup
             return _configuration[key];
         }
 

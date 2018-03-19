@@ -107,25 +107,6 @@ namespace TDD.Tests
             Assert.Contains(error, errorResult.Errors);
         }
 
-        public string BuildToken(User user, string secretKey, string issuer, DateTime? expirationDate = null)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.GivenName, user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
-            };
-
-            var token = new JwtSecurityToken(issuer,
-                issuer,
-                claims,
-                expires: expirationDate,
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
 
 
 

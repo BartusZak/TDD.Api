@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TDD.WebApi\TDD.WebApi.csproj" />
     <ProjectReference Include="..\TDD\TDD.csproj" />
   </ItemGroup>
 
