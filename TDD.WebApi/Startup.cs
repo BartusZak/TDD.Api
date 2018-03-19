@@ -22,5 +22,11 @@ namespace TDD.WebApi
         {
             service.AddMvc();
         }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            app.UseAuthentication();
+            app.UseMvc();
+        }
     }
 }
