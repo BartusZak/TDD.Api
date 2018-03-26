@@ -29,11 +29,6 @@ namespace TDD.Service
                 Errors = new List<string>()
             };
 
-            var isUserExist = _userRepository.Exist(x => x.Username == loginModel.Username);
-
-
-
-
             var user = _userRepository.GetBy(x => x.Username == loginModel.Username);
 
             if (user?.Password != GetHash(loginModel.Password))
