@@ -42,6 +42,7 @@ namespace TDD.WebApi
                             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
             });
+
             services.AddMvc();
         }
 

@@ -114,7 +114,7 @@ namespace TDD.Tests
         }
 
         [Fact]
-        public void ShouldReturnOkWhenRegisterSuccessful()
+        public void ShouldReturnOkWhenRegisterSuccessfull()
         {
             var registerModel =
                 new RegisterModel("asd", "sdgg", "sdgg");
