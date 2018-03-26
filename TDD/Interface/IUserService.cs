@@ -9,5 +9,6 @@ namespace TDD.Interface
     public interface IUserService
     {
         ResultDto<LoginResultDto> Login(LoginModel loginModel);
+        ResultDto<BaseDto> Register(RegisterModel registerModel);
     }
 }

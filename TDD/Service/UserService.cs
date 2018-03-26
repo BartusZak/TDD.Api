@@ -53,6 +53,40 @@ namespace TDD.Service
             return result;
         }
 
+        public ResultDto<BaseDto> Register(RegisterModel registerModel)
+        {
+            var result = new ResultDto<BaseDto>
+            {
+                Errors = new List<string>()
+
+            };
+
+            var userWithSameUsernmeAlreadyExists = _userRepository.Exist(x => x.Username == registerModel.Username);
+
+            if (userWithSameUsernmeAlreadyExists)
+            {
+                result.Errors.Add("User with the same username already exists");
+                return result;
+            }
+
+            var user = new User()
+            {
+                Username = registerModel.Username,
+                Password = GetHash(registerModel.Password)
+            };
+
+            try
+            {
+                _userRepository.Insert(user);
+            }
+            catch (Exception e)
+            {
+                result.Errors.Add(e.Message);
+            }
+
+            return result;
+        }
+
         public string BuildToken(User user, string secretKey, string issuer, DateTime? expirationDate = null)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

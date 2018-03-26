@@ -8,5 +8,6 @@ namespace TDD.Interface
     {
         bool Exist(Func<User, bool> function);
         T GetBy(Func<User, bool> function);
+        void Insert(User user);
     }
 }

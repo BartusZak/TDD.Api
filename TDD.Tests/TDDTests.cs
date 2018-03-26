@@ -117,14 +117,25 @@ namespace TDD.Tests
         public void ShouldReturnOkWhenRegisterSuccessful()
         {
             var registerModel =
-                new RegisterModel(Username = "asd", Password = "sdgg", ConfirmPassword = "sdgg");
+                new RegisterModel("asd", "sdgg", "sdgg");
+
             var userReposository = new Mock<IRepository<User>>();
+            userReposository.Setup(x => x.Exist(It.IsAny<Func<User, bool>>())).Returns(false);
+
+
+
             var configuraionManager = new Mock<IConfigurationManager>();
             var userService = new UserService(userReposository.Object, configuraionManager.Object);
             var accountController = new AccountController(userService);
 
             var result = accountController.Register(registerModel);
+
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resultValue = Assert.IsAssignableFrom<ResultDto<BaseDto>>(okResult.Value);
+
+            Assert.False(resultValue.IsError);
         }
+
 
     }
 }

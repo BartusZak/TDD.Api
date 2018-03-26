@@ -28,5 +28,23 @@ namespace TDD
 
             return Ok(result);
         }
+
+        public IActionResult Register(RegisterModel registerModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = _userService.Register(registerModel);
+
+            if (result.IsError)
+            {
+                return BadRequest(result);
+            }
+
+
+            return Ok(result);
+        }
     }
 }
